@@ -4,6 +4,9 @@
 
 <div class="contenedor-sm">
 
+    <div class="confirmacion">
+        <?php echo $mensaje ?? '';?>
+    </div>
     
     <div class="acciones">
         <a href="/">Iniciar sesión</a>

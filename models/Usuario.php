@@ -18,7 +18,7 @@ class Usuario extends ActiveRecord{
         $this->email = $args['email'] ?? '';
         $this->password = $args['password'] ?? '';
         $this->token = $args['token'] ?? '';
-        $this->confirmado = $args['confirmado'] ?? '';
+        $this->confirmado = $args['confirmado'] ?? 0;
     }
 
     //Validación para cuentas nuevas
@@ -29,8 +29,18 @@ class Usuario extends ActiveRecord{
         self::$alertas['error'][] ="El email no puede estar vacio";
         if(!$this->password)
         self::$alertas['error'][] ="El password no puede estar vacio";
+        else if(strlen($this->password)<6)
+        self::$alertas['error'][] ="El passwords debe tener al menos 6 caracteres";
         else if($this->password!==$password2)
         self::$alertas['error'][] ="Los password no concuerdan";
         return self::$alertas;
+    }
+
+    public function hashPassword(){
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function crearToken(){
+        $this->token = md5(uniqid());
     }
 }

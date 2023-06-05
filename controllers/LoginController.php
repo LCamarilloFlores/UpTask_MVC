@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use MVC\Router;
+use Classes\Email;
 use Model\Usuario;
 
 class LoginController{
@@ -24,6 +25,28 @@ class LoginController{
         if(esPost($_SERVER)){
             $usuario->sincronizar($_POST);
             $alertas = $usuario->validarNuevaCuenta($_POST['password2']);
+            $existeUsuario = Usuario::where("email",$usuario->email);
+            //Si validó correctamente los datos revisa si el usuario ya esta registrado
+            if(empty($alertas)){
+                if($existeUsuario){
+                    Usuario::setAlerta("error","El usuario ya esta registrado");
+                    $alertas = Usuario::getAlertas();
+                }
+                    //Si el Usuario no esta registrado crea la cuenta nueva
+                else{
+                    //Hashear el password
+                    $usuario->hashPassword();
+                    //Generar token
+                    $usuario->crearToken();
+                    //Crea la cuenta nueva
+                    $mail = new Email($usuario->email,$usuario->nombre,$usuario->token);
+                    $mail->enviarConfirmacion();
+                    if($usuario->guardar()){
+                        header('Location: /mensaje');
+                    }
+                    
+                }
+            }
         }
         $router->render("auth/crear",[
             'titulo'=> "Crear cuenta",
@@ -46,8 +69,19 @@ class LoginController{
         ]);
     }
     public static function confirmar(Router $router){
+        $usuario = Usuario::where("token",$_GET['token']);
+        if(!$usuario){
+            $mensaje = "El token no es válido.";
+        }
+        else {
+            $usuario->confirmado = 1;
+            $usuario->token = "";
+            $usuario->guardar();
+            $mensaje = "Se ha confirmado la cuenta.";
+        }
         $router->render("auth/confirmar",[
-            "titulo" => "Confirmacion"
+            "titulo" => "Confirmacion",
+            'mensaje'=>$mensaje
         ]);
     }
     public static function mensaje(Router $router){

@@ -5,15 +5,8 @@
 <div class="contenedor-sm">
     <p class="descripcion-pagina">Crear Cuenta</p>
 
-    <?php 
-    if($alertas['error'])
-    foreach($alertas['error'] as $alerta) { ?>
-
-        <div class="alerta error">
-            <?php echo $alerta;?>
-        </div>
-
-    <?php }?>
+    <?php include_once __DIR__."/../templates/alertas.php"; ?>
+    
     <form action="/crear" method="POST" class="formulario">
     <div class="campo">
         <label for="nombre">Nombre: </label>
