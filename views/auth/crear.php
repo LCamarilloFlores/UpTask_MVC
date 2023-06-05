@@ -5,9 +5,16 @@
 <div class="contenedor-sm">
     <p class="descripcion-pagina">Crear Cuenta</p>
 
-    <form action="/" method="POST" class="formulario">
+    <?php 
+    if($alertas['error'])
+    foreach($alertas['error'] as $alerta) { ?>
 
-<form action="/crear" method="POST" class="formulario">
+        <div class="alerta error">
+            <?php echo $alerta;?>
+        </div>
+
+    <?php }?>
+    <form action="/crear" method="POST" class="formulario">
     <div class="campo">
         <label for="nombre">Nombre: </label>
         <input 
@@ -15,6 +22,7 @@
             name="nombre" 
             id="nombre" 
             placeholder="Tu Nombre"
+            value="<?php echo $usuario->nombre;?>"
         >
     </div>
         <div class="campo">
@@ -24,6 +32,7 @@
                 name="email" 
                 id="email" 
                 placeholder="Tu Correo"
+                value="<?php echo $usuario->email;?>"
             >
         </div>
 

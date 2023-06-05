@@ -3,11 +3,11 @@
 namespace Controllers;
 
 use MVC\Router;
+use Model\Usuario;
 
 class LoginController{
     public static function login(Router $router){
         if(esPost($_SERVER)){
-            echo "Desde Post";
         }
         $router->render("auth/login",[
             'titulo'=> "Iniciar Sesión"
@@ -20,16 +20,19 @@ class LoginController{
         echo "Desde Logout";
     }
     public static function crear(Router $router){
+        $usuario = new Usuario;
         if(esPost($_SERVER)){
-            echo "Desde Post";
+            $usuario->sincronizar($_POST);
+            $alertas = $usuario->validarNuevaCuenta($_POST['password2']);
         }
         $router->render("auth/crear",[
-            'titulo'=> "Crear cuenta"
+            'titulo'=> "Crear cuenta",
+            'usuario'=>$usuario,
+            'alertas'=>$alertas
         ]);
     }
     public static function forgot(Router $router){
         if(esPost($_SERVER)){
-            echo "Desde Post";
         }
         $router->render("auth/forgot",[
             'titulo'=> "Recuperar cuenta"
@@ -37,14 +40,19 @@ class LoginController{
     }
     public static function reset(Router $router){
         if(esPost($_SERVER)){
-            echo "Desde Post";
         }
-        echo "Desde reset";
+        $router->render("auth/reset",[
+            'titulo'=> "Reestablecer Contraseña"
+        ]);
     }
     public static function confirmar(Router $router){
-        echo "Desde confirmar";
+        $router->render("auth/confirmar",[
+            "titulo" => "Confirmacion"
+        ]);
     }
     public static function mensaje(Router $router){
-        echo "Desde mensaje";
+        $router->render("auth/mensaje",[
+            "titulo" => "Cuenta creada"
+        ]);
     }
 }
