@@ -27,5 +27,8 @@ $router->post("/reset",[LoginController::class,"reset"]);
 $router->get("/mensaje",[LoginController::class,"mensaje"]);
 $router->get("/confirmar",[LoginController::class,"confirmar"]);
 
+//Zona  de proyectos
+$router->get("/dashboard",[])
+
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

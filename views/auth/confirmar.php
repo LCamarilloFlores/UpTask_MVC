@@ -4,9 +4,8 @@
 
 <div class="contenedor-sm">
 
-    <div class="confirmacion">
-        <?php echo $mensaje ?? '';?>
-    </div>
+   
+<?php include_once __DIR__.'/../templates/alertas.php';?>
     
     <div class="acciones">
         <a href="/">Iniciar sesión</a>

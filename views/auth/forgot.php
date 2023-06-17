@@ -5,6 +5,8 @@
 <div class="contenedor-sm">
     <p class="descripcion-pagina">Recuperar Cuenta</p>
 
+    <?php include_once __DIR__.'/../templates/alertas.php';?>
+
     <form action="/forgot" method="POST" class="formulario">
         
         <div class="campo">

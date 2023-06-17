@@ -39,8 +39,35 @@ class Usuario extends ActiveRecord{
     public function hashPassword(){
         $this->password = password_hash($this->password, PASSWORD_BCRYPT);
     }
+    public function verificaPassword(){
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
 
     public function crearToken(){
         $this->token = md5(uniqid());
+    }
+
+    public function validarEmail(){
+        if(!$this->email)
+            self::$alertas['error'][]="El correo no puede estar vacío.";
+        else if(!filter_var($this->email,FILTER_VALIDATE_EMAIL))
+        self::$alertas['error'][]="Email no válido.";
+        return self::$alertas;
+    }
+    public function validarPassword(){
+        if(!$this->password)
+            self::$alertas['error'][]="Por favor ingrese la nueva contraseña.";
+        else if(strlen($this->password)<6)
+        self::$alertas['error'][]="La contraseña debe tener al menos 6 caracteres.";
+        return self::$alertas;
+    }
+
+    public function validarLogin(){
+        if(!$this->password)
+            self::$alertas['error'][]="Por favor ingrese la contraseña.";
+        else if(strlen($this->password)<6)
+        self::$alertas['error'][]="La contraseña debe tener al menos 6 caracteres.";
+        $this->validarEmail();
+        return self::$alertas;
     }
 }
