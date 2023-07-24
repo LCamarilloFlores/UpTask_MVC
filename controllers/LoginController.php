@@ -42,10 +42,9 @@ class LoginController{
         ]);
     }
     public static function logout(Router $router){
-        if(esPost($_SERVER)){
-            echo "Desde Post";
-        }
-        echo "Desde Logout";
+        session_start();
+        $_SESSION = [];
+        header("Location: /");
     }
     public static function crear(Router $router){
         $usuario = new Usuario;
