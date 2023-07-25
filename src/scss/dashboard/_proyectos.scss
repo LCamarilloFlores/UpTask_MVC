@@ -12,6 +12,9 @@
   @include m.desktop {
     @include m.grid(3, 2rem);
   }
+  a {
+    color: white;
+  }
   .proyecto {
     background-color: lighten(v.$indigo, 5%);
     min-height: 12rem;
@@ -22,9 +25,6 @@
     border-radius: 0.5rem;
     &:hover {
       background-color: darken(v.$indigo, 5%);
-    }
-    a {
-      color: white;
     }
   }
 }
