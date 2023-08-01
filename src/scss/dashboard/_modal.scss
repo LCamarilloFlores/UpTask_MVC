@@ -1,0 +1,27 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.modal {
+  position: absolute;
+  background-color: rgb(0 0 0 / 0.6);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  .formulario {
+    max-width: 60rem;
+    width: 60%;
+    background-color: v.$blanco;
+    padding: 2rem;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-40rem);
+    opacity: 0;
+    transition: all 0.5s ease-out;
+    position: relative;
+    &.animar {
+      transform: translateY(-50%);
+      opacity: 1;
+    }
+  }
+}
